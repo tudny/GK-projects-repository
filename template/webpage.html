@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>
+        {{ title }}
+    </title>
+</head>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        color: #343a40;
+    }
+</style>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center">
+                {{ title }}
+            </h1>
+        </div>
+    </div>
+    {% for project in projects %}
+        <div class="row">
+            <div class="col-12">
+                <h2>
+                    {{ project.name }} - {{ project.author }}
+                </h2>
+                <img src="{{ project.image }}" class="img-fluid" alt="{{ project.title }}">
+                <p>
+                    {{ project.description }}
+                </p>
+                <p>
+                    <a href="{{ project.url }}" class="btn btn-primary">
+                        Zobacz projekt
+                    </a>
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</body>
+
+</html>
