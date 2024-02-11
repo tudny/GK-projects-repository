@@ -28,23 +28,25 @@
         </div>
     </div>
     {% for project in projects %}
-        <div class="row">
-            <div class="col-12">
-                <h2>
-                    {{ project.name }} - {{ project.author }}
-                </h2>
-                <img src="{{ project.image }}" class="img-fluid" alt="{{ project.title }}">
-                <p>
-                    {{ project.description }}
-                </p>
-                <p>
-                    <a href="{{ project.url }}" class="btn btn-primary">
-                        Zobacz projekt
-                    </a>
-                </p>
-            </div>
+    <hr/>
+    <div class="row">
+        <div class="col-12">
+            <h2>
+                {{ project.title }} - {{ project.author }}
+            </h2>
+            {% for image in project.images %}
+            <img src="{{ image }}" class="img-fluid" alt="{{ project.name }}">
+            {% endfor %}
+            <p>
+                {{ project.description }}
+            </p>
+            <p>
+                <a href="{{ project.url }}" class="btn btn-primary">
+                    Zobacz projekt
+                </a>
+            </p>
         </div>
-        <hr/>
+    </div>
     {% endfor %}
 </div>
 </body>

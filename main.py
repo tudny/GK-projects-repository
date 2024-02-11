@@ -2,64 +2,55 @@ import click
 import jinja2
 from pathlib import Path
 from os import walk
+import yaml
 
 
 class Project:
-    def __init__(self, name: str, image: str, description: str, title: str, url: str, author: str):
+    def __init__(self, name: str, images: [str], description: str, title: str, url: str, author: str):
         self.name = name
-        self.image = image
+        self.images = images
         self.description = description
         self.title = title
         self.url = url
         self.author = author
 
+    def pack_images(self, dir_name, output_dir):
+        Path(f'{output_dir}/{dir_name}').mkdir(parents=True, exist_ok=True)
+        for image in self.images:
+            Path(f'{output_dir}/{image}').write_bytes(Path(f'{image}').read_bytes())
 
-def resolve_image(dir_name, files, output_dir):
-    if 'window.png' not in files:
-        return None
-    Path(f'{output_dir}/{dir_name}').mkdir(parents=True, exist_ok=True)
-    Path(f'{output_dir}/{dir_name}/window.png').write_bytes(Path(f'{dir_name}/window.png').read_bytes())
-    return f'{dir_name}/window.png'
-
-
-def resolve_description(dir_name, files):
-    if 'description.html' not in files:
-        return ''
-    return Path(f'{dir_name}/description.html').read_text()
-
-
-def resolve_title(dir_name, files):
-    if 'title.txt' not in files:
-        return ''
-    return Path(f'{dir_name}/title.txt').read_text()
+    @staticmethod
+    def from_yaml(yaml_file, dir_name):
+        data = yaml.safe_load(yaml_file)
+        return Project(
+            dir_name,
+            [f'{dir_name}/{x}' for x in data['images']],
+            data['description'],
+            data['title'],
+            data['link'],
+            data['author']
+        )
 
 
-def resolve_url(dir_name, files):
-    if 'link.txt' not in files:
-        return ''
-    return Path(f'{dir_name}/link.txt').read_text()
+def collect_yaml_config(dir_name, files):
+    for file in files:
+        if file.endswith('.yaml'):
+            return Path(f'{dir_name}/{file}').read_text()
+    return None
 
 
-def resolve_author(dir_name, files):
-    if 'author.txt' not in files:
-        return ''
-    return Path(f'{dir_name}/author.txt').read_text()
-
-
-def collect_project(dir_info):
+def collect_project(dir_info, output_dir):
     dir_name, _, files = dir_info
-    return Project(
-        resolve_title(dir_name, files),
-        resolve_image(dir_name, files, 'output'),
-        resolve_description(dir_name, files),
-        dir_name,
-        resolve_url(dir_name, files),
-        resolve_author(dir_name, files)
-    )
+    yaml_config = collect_yaml_config(dir_name, files)
+    if yaml_config is None:
+        return None
+    project = Project.from_yaml(yaml_config, dir_name)
+    project.pack_images(dir_name, output_dir)
+    return project
 
 
-def collect_projects(input_dir):
-    return [collect_project(x) for x in walk(input_dir) if x[0] != input_dir]
+def collect_projects(input_dir, output_dir):
+    return [collect_project(x, output_dir) for x in walk(input_dir) if x[0] != input_dir]
 
 
 @click.command()
@@ -70,7 +61,7 @@ def main(input, output, template):
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(template))
     template = env.get_template('webpage.html')
     content = {
-        'projects': collect_projects(input),
+        'projects': collect_projects(input, output),
         'title': 'Projekty z Grafiki Komputerowej',
     }
 
