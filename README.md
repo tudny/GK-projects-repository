@@ -5,13 +5,19 @@
 Szczegóły projektów znajdują się w katalogach
 `<nazwa_projektu>` w katalogu `repositories`.
 
-Każdy projekt powinien składać się z plików:
+Każdy projekt powinien składać się z pliku `config.yaml` oraz zdjęć.
 
-- `author.txt` - zawiera informacje o autorze
-- `description.html` - zawiera opis projektu
-- `window.png` - zawiera zrzut ekranu z działającego programu
-- `link.txt` - zawiera link do repozytorium projektu
-- `title.txt` - zawiera tytuł projektu
+```yaml
+title: "Mega super projekt"
+author: "Janek Kowalski"
+link: "https://github.com/XYZ/ABC"
+description: |
+  Projekt prezentuje proste bryły w OpenGL.
+images:
+  - "window1.png"
+  - "window2.png"
+  - "window3.png"
+```
 
 ## Uruchomienie
 
