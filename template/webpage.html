@@ -27,35 +27,57 @@
       {% set project_id = loop.index %}
       <div class="col">
         <div class="card h-100">
-          <div id="carousel{{ project_id }}" class="carousel slide card-img-top">
+          {% macro carousel(carousel_id_suff, img_classes, img_target) %}
+          {% set carousel_id = 'carousel' ~ project_id ~ '-' ~ carousel_id_suff %}
+          <div id="{{ carousel_id }}" class="carousel slide">
             {% if project.images|length > 1 %}
             <div class="carousel-indicators">
               {% for image in project.images %}
-              <button type="button" data-bs-target="#carousel{{ project_id }}" data-bs-slide-to="{{ loop.index0 }}" {%
-                if loop.first %}class="active" {% endif %}></button>
+              <button type="button" data-bs-target="#{{ carousel_id }}" data-bs-slide-to="{{ loop.index0 }}" {% if
+                loop.first %}class="active" {% endif %}></button>
               {% endfor %}
             </div>
             {% endif %}
             <div class="carousel-inner">
               {% for image in project.images %}
               <div class="carousel-item {% if loop.first %}active{% endif %}">
-                <img src="{{ image }}" class="d-block w-100" alt="{{ project.name }}">
+                <div class="d-none d-lg-block">
+                  {% if img_target %}<a href="#" data-bs-toggle="modal" data-bs-target="#{{ img_target }}">{% endif %}
+                    <img src="{{ image }}" class="{{ img_classes }}" alt="{{ project.name }}">
+                    {% if img_target %}</a>{% endif %}
+                </div>
+                <div class="d-lg-none">
+                  <img src="{{ image }}" class="{{ img_classes }}" alt="{{ project.name }}">
+                </div>
               </div>
               {% endfor %}
             </div>
             {% if project.images|length > 1 %}
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ project_id }}"
+            <button class=" carousel-control-prev" type="button" data-bs-target="#{{ carousel_id }}"
               data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Poprzedni</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ project_id }}"
+            <button class="carousel-control-next" type="button" data-bs-target="#{{ carousel_id }}"
               data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Następny</span>
             </button>
             {% endif %}
           </div>
+          {% endmacro %}
+
+          {% set modal_id = 'modal' ~ project_id ~ '-' ~ loop.index0 %}
+          {{ carousel(0, 'd-block w-100 card-img-top', modal_id) }}
+
+          <div class="modal fade" id="{{ modal_id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+              <div class="modal-content">
+                {{ carousel(1, 'd-block w-100', '') }}
+              </div>
+            </div>
+          </div>
+
           <div class="card-body pb-0">
             <h3 class="card-title {% if project.author %}mb-1{% else %}mb-3{% endif %}">
               {% if project.url %}
