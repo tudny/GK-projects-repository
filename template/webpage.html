@@ -10,6 +10,13 @@
   <title>
     {{ title }}
   </title>
+
+  <style>
+    .modal-img {
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+  </style>
 </head>
 
 <body>
@@ -27,8 +34,7 @@
       {% set project_id = loop.index %}
       <div class="col">
         <div class="card h-100">
-          {% macro carousel(carousel_id_suff, img_classes, img_target) %}
-          {% set carousel_id = 'carousel' ~ project_id ~ '-' ~ carousel_id_suff %}
+          {% set carousel_id = 'carousel' ~ project_id %}
           <div id="{{ carousel_id }}" class="carousel slide">
             {% if project.images|length > 1 %}
             <div class="carousel-indicators">
@@ -42,12 +48,20 @@
               {% for image in project.images %}
               <div class="carousel-item {% if loop.first %}active{% endif %}">
                 <div class="d-none d-lg-block">
-                  {% if img_target %}<a href="#" data-bs-toggle="modal" data-bs-target="#{{ img_target }}">{% endif %}
-                    <img src="{{ image }}" class="{{ img_classes }}" alt="{{ project.name }}">
-                    {% if img_target %}</a>{% endif %}
+                  {% set modal_id = 'modal' ~ project_id ~ '-' ~ loop.index0 %}
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#{{ modal_id}}">
+                    <img src="{{ image }}" class="d-block w-100 card-img-top" alt="{{ project.name }}">
+                  </a>
+                  <div class="modal fade" id="{{ modal_id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered w-auto mw-100">
+                      <div class="m-auto">
+                        <img src="{{ image }}" class="modal-img" alt="{{ project.name }}">
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="d-lg-none">
-                  <img src="{{ image }}" class="{{ img_classes }}" alt="{{ project.name }}">
+                  <img src="{{ image }}" class="d-block w-100 card-img-top" alt="{{ project.name }}">
                 </div>
               </div>
               {% endfor %}
@@ -64,18 +78,6 @@
               <span class="visually-hidden">Następny</span>
             </button>
             {% endif %}
-          </div>
-          {% endmacro %}
-
-          {% set modal_id = 'modal' ~ project_id ~ '-' ~ loop.index0 %}
-          {{ carousel(0, 'd-block w-100 card-img-top', modal_id) }}
-
-          <div class="modal fade" id="{{ modal_id }}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl">
-              <div class="modal-content">
-                {{ carousel(1, 'd-block w-100', '') }}
-              </div>
-            </div>
           </div>
 
           <div class="card-body pb-0">
