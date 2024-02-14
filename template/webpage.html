@@ -82,13 +82,7 @@
 
           <div class="card-body pb-0">
             <h3 class="card-title {% if project.author %}mb-1{% else %}mb-3{% endif %}">
-              {% if project.url %}
-              <a href="{{ project.url }}" class="text-decoration-none">
-                {{ project.title }}
-              </a>
-              {% else %}
               {{ project.title }}
-              {% endif %}
             </h3>
             {% if project.author %}
             <p class="text-body-secondary">{{ project.author }}</p>
@@ -97,6 +91,9 @@
             <p>
               {{ project.description }}
             </p>
+            {% endif %}
+            {% if project.url %}
+            <p><a href="{{ project.url }}" class="text-decoration-none mb-2">Strona projektu</a></p>
             {% endif %}
           </div>
         </div>
