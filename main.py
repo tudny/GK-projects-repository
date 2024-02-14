@@ -25,10 +25,10 @@ class Project:
         return Project(
             dir_name,
             [f'{dir_name}/{x}' for x in data['images']],
-            data['description'],
+            data.get('description'),
             data['title'],
-            data['link'],
-            data['author']
+            data.get('link'),
+            data.get('author')
         )
 
 
