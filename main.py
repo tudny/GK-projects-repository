@@ -35,7 +35,7 @@ class Project:
 def collect_yaml_config(dir_name, files):
     for file in files:
         if file.endswith('.yaml'):
-            return Path(f'{dir_name}/{file}').read_text()
+            return Path(f'{dir_name}/{file}').read_text(encoding="utf-8")
     return None
 
 
@@ -66,7 +66,7 @@ def main(input, output, template):
     }
 
     Path(output).mkdir(parents=True, exist_ok=True)
-    with open(f'{output}/index.html', 'w') as f:
+    with open(f'{output}/index.html', 'w', encoding="utf-8") as f:
         f.write(template.render(content))
 
 

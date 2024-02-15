@@ -1,0 +1,10 @@
+title: "Trójkątne abstrakcje"
+description: |
+  Projekt przedstawia abstrakcję stworzoną z trójkątów rozmieszczonych w przestrzeni 3D.
+  Odpowiednie ustawienie kamery pozwala na odkrycie ukrytego obrazu.
+author: "Mikołaj Komar"
+images:
+  - "window1.png"
+  - "window2.png"
+  - "window3.png"
+  - "window4.png"
