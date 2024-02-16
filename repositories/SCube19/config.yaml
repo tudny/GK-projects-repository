@@ -1,0 +1,9 @@
+title: "Real Engine"
+author: "Konrad Korczyński"
+link: "https://github.com/SCube19/real-engine"
+description: |
+  Prosty silnik 3D z obsługą dynamicznego światła punktowego, 
+  kierunkowego oraz typu reflektora (ang. spotlight), 
+  w cieniowaniu phonga, gouranda i płaskim.
+images:
+  - "window.gif"
