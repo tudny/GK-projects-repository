@@ -1,5 +1,12 @@
 title: "Symulator tkaniny"
+author: "Mieszko Grodzicki"
+link: "https://github.com/mgr0dzicki/cloth-simulator"
 images:
   - window1.png
   - window2.png
   - window3.png
+description: |
+  Projekt prezentuje symulator tkaniny oparty na pomysłach zaczerpniętych głównie z
+  <a href="https://graphics.stanford.edu/~mdfisher/cloth.html">Matt's Webcorner - Cloth</a>.
+  Część graficzna wykorzystuje bibliotekę OpenGL. Interfejs służący do zmiany parametrów symulacji
+  został zbudowany przy użyciu biblioteki <a href="https://github.com/ocornut/imgui">ImGui</a>.
