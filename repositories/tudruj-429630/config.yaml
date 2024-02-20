@@ -1,7 +1,18 @@
-title: "L-Systems"
+title: "L-Systemy"
 author: "Aleksander Tudruj"
-link: "https://github.com/tudny/GK-projekt-zaliczeniowy"
+link: "https://github.com/tudny/MIMUW-collection/tree/master/GK/GK-projekt-zaliczeniowy"
 description: |
-  Projekt prezentuje proste L-Systemy napisane w OpenGLu.
+  Projekt prezentuje prostą implementację L-Systemów w OpenGLu.
+  Więcej o formalnej definicji L-Systemów można przeczytać w książce 
+  <a href="https://algorithmicbotany.org/papers/abop/abop.pdf">
+    The Algorithmic Beauty of Plants
+  </a>.
+  Wybrany system prezentuje obiekt drzewa, który rysowany jest
+  wielokrotnie w obrębie lasu.
+  Teren modelowany jest za pomocą
+  <a href="https://en.wikipedia.org/wiki/Perlin_noise">
+    szumu Perlin'a
+  </a>.
 images:
+  - "recording.gif"
   - "window.png"
