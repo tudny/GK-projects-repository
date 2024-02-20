@@ -34,7 +34,7 @@ class Project:
 
 def collect_yaml_config(dir_name, files):
     for file in files:
-        if file.endswith('.yaml'):
+        if file.endswith('.yaml') or file.endswith('.yml'):
             return Path(f'{dir_name}/{file}').read_text(encoding="utf-8")
     return None
 
