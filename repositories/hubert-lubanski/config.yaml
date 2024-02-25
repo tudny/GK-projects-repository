@@ -1,0 +1,10 @@
+title: "Hipersześcian i jego obroty"
+author: "Hubert Lubański"
+images:
+  - window.gif
+description: |
+  Prosty program zainspirowany wsparciem sprzętowym w kartach graficznych dla macierzy 4x4.
+  Pozwala na interaktywne poddawanie sześcianu/hipersześcianu obrotom w 3- i 4- wymiarowej przestrzeni.
+  Na hiperkostkę można 'spojrzeć' zarówno poprzez rzut ortogonalny jaki i rzut stereograficzny
+  (tak jakbyśmy patrzyli na trójwymiarowy cień, stelażu czterowymiarowej kostki oświetlonej punktowym światłem
+  leżącym na czwartej osi nad naszą hiperkostką).
