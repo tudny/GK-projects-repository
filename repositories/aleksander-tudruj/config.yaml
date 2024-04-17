@@ -3,5 +3,9 @@ author: "Aleksander Tudruj"
 link: "https://github.com/tudny/MIMUW-collection/tree/master/GK/GK-projekt-zaliczeniowy"
 description: |
   Projekt prezentuje proste L-Systemy napisane w OpenGLu.
+  Pomysł oparty o książkę
+    <a href="http://algorithmicbotany.org/papers/abop/abop.pdf">
+      "The Algorithmic Beauty of Plants"
+    </a> Przemysława Prusinkiewicza i Aristida Lindenmayera.
 images:
   - "window.png"
