@@ -12,8 +12,8 @@ build: requirements.txt
 run: build main.py
 	python main.py --output $(OUTPUT)
 
-pack: build
-	tar czf $(PACKNAME) $(OUTPUT)/*
+pack: run
+	tar -C $(OUTPUT) -czf $(PACKNAME) index.html repositories
 
 clean:
 	rm -rf $(OUTPUT)
