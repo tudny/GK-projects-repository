@@ -1,8 +1,8 @@
 name: Create release package
 
 on:
-  push:
-    tags: [ 'release-*' ]
+  release:
+    types: [published]
 
 jobs:
   pack:
@@ -12,8 +12,11 @@ jobs:
       uses: actions/checkout@main
     - name: build application
       run: make pack
-    - name: upload artifact
-      uses: actions/upload-artifact@v2
+    - name: upload release package
+      uses: softprops/action-gh-release@v2
       with:
-        name: projekty-z-grafiki-${GITHUB_REF}.tar.gz
-        path: projekty-z-grafiki.tar.gz
+        files: *.tar.gz
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        body: ${{ github.event.release.body }}
