@@ -6,7 +6,15 @@ import yaml
 
 
 class Project:
-    def __init__(self, name: str, images: [str], description: str, title: str, url: str, author: str):
+    def __init__(
+        self,
+        name: str,
+        images: [str],
+        description: str,
+        title: str,
+        url: str,
+        author: str,
+    ):
         self.name = name
         self.images = images
         self.description = description
@@ -15,27 +23,30 @@ class Project:
         self.author = author
 
     def pack_images(self, dir_name, output_dir):
-        Path(f'{output_dir}/{dir_name}').mkdir(parents=True, exist_ok=True)
+        Path(f"{output_dir}/{dir_name}").mkdir(parents=True, exist_ok=True)
         for image in self.images:
-            Path(f'{output_dir}/{image}').write_bytes(Path(f'{image}').read_bytes())
+            Path(f"{output_dir}/{image}").write_bytes(Path(f"{image}").read_bytes())
 
     @staticmethod
     def from_yaml(yaml_file, dir_name):
         data = yaml.safe_load(yaml_file)
         return Project(
             dir_name,
-            [f'{dir_name}/{x}' for x in data['images']],
-            data.get('description'),
-            data['title'],
-            data.get('link'),
-            data.get('author')
+            [f"{dir_name}/{x}" for x in data["images"]],
+            data.get("description"),
+            data["title"],
+            data.get("link"),
+            data.get("author"),
         )
+
+    def __repr__(self):
+        return f"Project({self.name}, {self.images}, {self.title}, {self.url}, {self.author})"
 
 
 def collect_yaml_config(dir_name, files):
     for file in files:
-        if file.endswith('.yaml') or file.endswith('.yml'):
-            return Path(f'{dir_name}/{file}').read_text(encoding="utf-8")
+        if file.endswith(".yaml") or file.endswith(".yml"):
+            return Path(f"{dir_name}/{file}").read_text(encoding="utf-8")
     return None
 
 
@@ -50,25 +61,33 @@ def collect_project(dir_info, output_dir):
 
 
 def collect_projects(input_dir, output_dir):
-    return [collect_project(x, output_dir) for x in walk(input_dir) if x[0] != input_dir]
+    return [
+        collect_project(x, output_dir) for x in walk(input_dir) if x[0] != input_dir
+    ]
+
+
+def collect_all_years(input_dir, output_dir):
+    _, years, _ = next(walk(input_dir, topdown=True))
+    projects_by_year = [(int(year), collect_projects(f"{input_dir}/{year}", output_dir)) for year in years]
+    return sorted(projects_by_year, key=lambda x: x[0], reverse=True)
 
 
 @click.command()
-@click.option('--input', '-i', help='Input repository', default='repositories')
-@click.option('--output', '-o', help='Output file', default='output')
-@click.option('--template', '-t', help='Template file', default='template')
+@click.option("--input", "-i", help="Input repository", default="repositories")
+@click.option("--output", "-o", help="Output file", default="output")
+@click.option("--template", "-t", help="Template file", default="template")
 def main(input, output, template):
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(template))
-    template = env.get_template('webpage.html')
+    template = env.get_template("webpage.html")
     content = {
-        'projects': collect_projects(input, output),
-        'title': 'Projekty z Grafiki Komputerowej',
+        "projects_by_year": collect_all_years(input, output),
+        "title": "Projekty z Grafiki Komputerowej",
     }
 
     Path(output).mkdir(parents=True, exist_ok=True)
-    with open(f'{output}/index.html', 'w', encoding="utf-8") as f:
+    with open(f"{output}/index.html", "w", encoding="utf-8") as f:
         f.write(template.render(content))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
