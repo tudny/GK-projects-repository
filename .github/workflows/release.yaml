@@ -15,5 +15,5 @@ jobs:
     - name: upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: projekty-z-grafiki-${GITHUB_REF#refs/tags/release-}.tar.gz
+        name: projekty-z-grafiki-${GITHUB_REF}.tar.gz
         path: projekty-z-grafiki.tar.gz
