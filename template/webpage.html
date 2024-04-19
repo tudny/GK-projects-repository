@@ -34,10 +34,9 @@
       </h1>
     </div>
     {% for year, projects in projects_by_year %}
-    <hr>
-    <div class="row bg-light my-3 p-2 mx-0 rounded">
+    <div class="row mb-4 {% if loop.first %}mt-4{% else %}mt-5{% endif %} p-2 mx-0">
       <h2 class="text-center font-monospace m-0">
-        Rok akademicki {{ year }} / {{ year + 1 }}
+        Rok akademicki {{ year }}/{{ year + 1 }}
       </h2>
     </div>
     <div class="row row-cols-1 row-cols-lg-2 g-3">
