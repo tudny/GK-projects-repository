@@ -1,0 +1,19 @@
+name: Create release package
+
+on:
+  push:
+    tags: [ 'release-*' ]
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout repo
+      uses: actions/checkout@main
+    - name: build application
+      run: make pack
+    - name: upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: projekty-z-grafiki-${GITHUB_REF#refs/tags/release-}.tar.gz
+        path: projekty-z-grafiki.tar.gz
